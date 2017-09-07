@@ -8,11 +8,16 @@
 
 @foreach (var p in Model.Products)
 {
-    <h3>@p.Name</h3>
-    @p.Description
-    <h4>@p.Price.ToString("c")</h4>
+    <div class="well">
+        <h3>
+            <strong>@p.Name</strong>
+            <span class="pulll-right label label-primary" >@p.Price.ToString("c")</span>
+        </h3>
+
+        <span class="lead">@p.Description </span> 
+    </div>
 }
 
-<div>
+<div class="btn-group pull-right">
 @Html.PageLinks(Model.PagingInfo, i=>Url.Action("List", new {page = i }))
 </div>
