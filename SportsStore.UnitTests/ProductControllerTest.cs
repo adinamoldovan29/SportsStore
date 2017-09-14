@@ -23,7 +23,7 @@ namespace SportsStore.UnitTests
             productController.PageSize = 2;
 
             // Act
-            var model = productController.List(2).Model as ProductsListViewModel;
+            var model = productController.List(null, 2).Model as ProductsListViewModel;
 
             // Assert
             Assert.IsNotNull(model, "Model is null");
@@ -41,7 +41,7 @@ namespace SportsStore.UnitTests
             productController.PageSize = 2;
 
             // Act
-            var model = productController.List(2).Model as ProductsListViewModel;
+            var model = productController.List(null, 2).Model as ProductsListViewModel;
 
             // Assert
             Assert.IsNotNull(model, "Model is null");
@@ -52,6 +52,27 @@ namespace SportsStore.UnitTests
             Assert.AreEqual(2, model.PagingInfo.ItemsPerPage, "ItemPerPage value is not correct");
         }
 
+        [TestMethod]
+        public void List_Category_ReturnsOnlyProductsFromCategory()
+        {
+            var category = "cat1";
+            // Arange
+            var productsRepoMoack = CreateProductsWithCategoryRepoMock();
+
+            var productController = new ProductController(productsRepoMoack.Object);
+            productController.PageSize = 2;
+
+            // Act
+            var model = productController.List(category, 1).Model as ProductsListViewModel;
+
+            // Assert
+            Assert.IsNotNull(model, "Model is null");
+
+            Assert.AreEqual(2, model.Products.Count(), "Products were not retured corectly");
+            Assert.AreEqual(category, model.Products.First().Category, "Category is not correct");
+            Assert.AreEqual(category, model.Products.Last().Category, "Category is not correct");
+        }
+
         private Mock<IProductsRepository> CreateProductsRepoMock()
         {
             var mock = new Mock<IProductsRepository>();
@@ -59,6 +80,20 @@ namespace SportsStore.UnitTests
                 new Product { ProductID = 3,  Name = "P3"},
                 new Product { ProductID = 2, Name = "P2"},
                 new Product { ProductID = 1, Name = "P1"}
+            });
+
+            return mock;
+        }
+
+        private Mock<IProductsRepository> CreateProductsWithCategoryRepoMock()
+        {
+            var mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>(){
+                new Product { ProductID = 5,  Name = "P3", Category = "cat1"},
+                new Product { ProductID = 4, Name = "P2", Category = "cat2"},
+                new Product { ProductID = 3, Name = "P2"},
+                new Product { ProductID = 2, Name = "P2", Category = "cat2"},
+                new Product { ProductID = 1, Name = "P1", Category = "cat1"}
             });
 
             return mock;
