@@ -73,6 +73,7 @@ namespace SportsStore.UnitTests
             Assert.AreEqual(category, model.Products.Last().Category, "Category is not correct");
         }
 
+        #region Private
         private Mock<IProductsRepository> CreateProductsRepoMock()
         {
             var mock = new Mock<IProductsRepository>();
@@ -98,5 +99,7 @@ namespace SportsStore.UnitTests
 
             return mock;
         }
+
+        #endregion
     }
 }
