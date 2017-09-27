@@ -101,6 +101,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Helpers\RepositoryHelper.cs" />
+    <Compile Include="NavigationControllerTest.cs" />
     <Compile Include="PagingHelpersTest.cs" />
     <Compile Include="ProductControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

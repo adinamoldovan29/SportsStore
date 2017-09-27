@@ -17,10 +17,13 @@ namespace SportsStore.WebUI.Controllers
         }
 
         // GET: Navigation
-        public PartialViewResult Menu()
+        public PartialViewResult Menu(string category = null)
         {
+            ViewBag.CurrentCategory = category;
+
             var cat = prodRepo.Products
                 .Select(p => p.Category)
+                .Where(c => !String.IsNullOrWhiteSpace(c))
                 .Distinct()
                 .OrderBy(c => c);
 

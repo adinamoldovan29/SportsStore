@@ -20,10 +20,11 @@ namespace SportsStore.WebUI.Controllers
 
         public ViewResult List(string category, int page = 1)
         {
-            var productsForCathegory = productRepository.Products
-                .Where(p => string.IsNullOrWhiteSpace(category) || p.Category == category);
+            var productsForCategory = string.IsNullOrWhiteSpace(category) ?
+                productRepository.Products :
+                productRepository.Products.Where(p => p.Category == category);
 
-            var productsForPage = productsForCathegory
+            var productsForPage = productsForCategory
                 .OrderBy(p => p.ProductID)
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize);
@@ -32,7 +33,7 @@ namespace SportsStore.WebUI.Controllers
             {
                 CurrentPage = page,
                 ItemsPerPage = PageSize,
-                TotalItems = productsForCathegory.Count(),
+                TotalItems = productsForCategory.Count(),
             };
 
             var model = new ProductsListViewModel()
