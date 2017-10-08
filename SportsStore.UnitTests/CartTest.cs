@@ -1,16 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SportsStore.Domain.Entities;
-using System;
-using System.Collections.Generic;
+using SportsStore.Domain.Abstract;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SportsStore.WebUI.Controllers;
 
 namespace SportsStore.UnitTests
 {
     [TestClass]
     public class CartTest
     {
+        #region Cart Entity
         [TestMethod]
         public void AddToCart_2Products_Added()
         {
@@ -105,5 +105,30 @@ namespace SportsStore.UnitTests
             // Assert
             Assert.AreEqual(55, cartValue, "Cart value not calculated correct");
         }
+        #endregion
+
+        #region CartController
+
+        [TestMethod]
+        public void AddToCart_OneProduct_ProductAdded()
+        {
+            // Arange
+            var prodRepoMock = new Mock<IProductsRepository>();
+            prodRepoMock.Setup(m => m.Products).Returns(new Product[] {
+            new Product() { ProductID = 1, Name = "P1", Category = "Products"}}.AsQueryable());
+
+            var cart = new Cart();
+            var cartController = new CartController(prodRepoMock.Object);
+
+            // Act
+            cartController.AddtoCart(cart, 1, null);
+
+            // Assert
+            Assert.AreEqual(cart.CartLines.Count(), 1);
+            Assert.AreEqual(cart.CartLines.First().Product.ProductID, 1);
+        }
+
+
+        #endregion
     }
 }
