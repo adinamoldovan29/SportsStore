@@ -4,6 +4,7 @@ using SportsStore.Domain.Entities;
 using SportsStore.Domain.Abstract;
 using System.Linq;
 using SportsStore.WebUI.Controllers;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.UnitTests
 {
@@ -113,9 +114,7 @@ namespace SportsStore.UnitTests
         public void AddToCart_OneProduct_ProductAdded()
         {
             // Arange
-            var prodRepoMock = new Mock<IProductsRepository>();
-            prodRepoMock.Setup(m => m.Products).Returns(new Product[] {
-            new Product() { ProductID = 1, Name = "P1", Category = "Products"}}.AsQueryable());
+            var prodRepoMock = CreateRepositoryWithOneProduct();
 
             var cart = new Cart();
             var cartController = new CartController(prodRepoMock.Object);
@@ -128,7 +127,45 @@ namespace SportsStore.UnitTests
             Assert.AreEqual(cart.CartLines.First().Product.ProductID, 1);
         }
 
+        [TestMethod]
+        public void AddToCart_OneProd_RedirectToCartScreen()
+        {
+            // Arange
+            var prodRepoMack = CreateRepositoryWithOneProduct();
+            var cart = new Cart();
+            var cartController = new CartController(prodRepoMack.Object);
 
+            // Act
+            var actionResult = cartController.AddtoCart(cart, 1, "myUrl");
+
+            // Assert
+            Assert.AreEqual("myUrl", actionResult.RouteValues["returnUrl"]);
+            Assert.AreEqual("Index", actionResult.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void Index_NoProd_RedirectToCartScreen()
+        {
+            // Arange
+            var cart = new Cart();
+            var cartController = new CartController(null);
+
+            // Act
+            var result = (CartIndexViewModel)cartController.Index(cart, "myUrl").ViewData.Model;
+
+            // Assert
+            Assert.AreEqual("myUrl", result.ReturnUrl);
+            Assert.AreEqual(cart, result.Cart);
+        }
         #endregion
+
+        private Mock<IProductsRepository> CreateRepositoryWithOneProduct()
+        {
+            var prodRepoMock = new Mock<IProductsRepository>();
+            prodRepoMock.Setup(m => m.Products).Returns(new Product[] {
+            new Product() { ProductID = 1, Name = "P1", Category = "Products"}}.AsQueryable());
+
+            return prodRepoMock;
+        }
     }
 }
