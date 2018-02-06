@@ -10,11 +10,17 @@ namespace SportsStore.Domain.Entities
     public class ShippingDetails
     {
         [Required(ErrorMessage = "Please enter a name")]
-        public string Name { get; set; }
+        [Display(Name = "Name")]
+        public string NameOfCustomer { get; set; }
 
         [Required(ErrorMessage = "Please enter at least the first line of address")]
+        [Display(Name = "Line 1")]
         public string AddressLine1 { get; set; }
+
+        [Display(Name = "Line 2")]
         public string AddressLine2 { get; set; }
+
+        [Display(Name = "Line 3")]
         public string AddressLine3 { get; set; }
 
         [Required(ErrorMessage = "Please enter a city name")]

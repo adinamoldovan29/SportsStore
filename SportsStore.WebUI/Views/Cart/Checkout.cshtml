@@ -1,0 +1,42 @@
+﻿@model SportsStore.Domain.Entities.ShippingDetails
+
+@{
+    ViewBag.Title = "Sports Store: Checkout";
+}
+
+<h1>Checkout now</h1>
+<p>Please enter you details bellow. We'll ship your goodies!</p>
+
+@using (Html.BeginForm()) {
+    <h3>Ship to</h3>
+    <div class="form-group">
+        <label>Name</label>
+        @Html.TextBoxFor(model => model.NameOfCustomer, new { @class = "form-control" })
+    </div>
+
+    <h3>Address</h3>
+
+    var notIncludedProp = new List<string> { nameof(Model.NameOfCustomer), nameof(Model.GiftWrap)};
+    foreach (var prop in ViewData.ModelMetadata.Properties)
+    {
+        if (!notIncludedProp.Contains(@prop.PropertyName))
+        {
+            <div class="form-group">
+                <label>@(prop.DisplayName ?? prop.PropertyName)</label>
+                @Html.TextBox(prop.PropertyName, null, new { @class = "form-control" })
+            </div>
+        }
+    }
+    
+    <h3>Options</h3>
+    <div class="checkbox">
+        <label>
+            @Html.EditorFor(model => model.GiftWrap)
+            Pack it nice
+        </label>
+    </div>
+
+    <div class="text-center">
+        <input type="submit" value="Complete Order" class="btn btn-default"/>
+    </div>
+}
