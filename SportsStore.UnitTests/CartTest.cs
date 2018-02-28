@@ -117,7 +117,7 @@ namespace SportsStore.UnitTests
             var prodRepoMock = CreateRepositoryWithOneProduct();
 
             var cart = new Cart();
-            var cartController = new CartController(prodRepoMock.Object);
+            var cartController = new CartController(prodRepoMock.Object, null);
 
             // Act
             cartController.AddtoCart(cart, 1, null);
@@ -133,7 +133,7 @@ namespace SportsStore.UnitTests
             // Arange
             var prodRepoMack = CreateRepositoryWithOneProduct();
             var cart = new Cart();
-            var cartController = new CartController(prodRepoMack.Object);
+            var cartController = new CartController(prodRepoMack.Object, null);
 
             // Act
             var actionResult = cartController.AddtoCart(cart, 1, "myUrl");
@@ -148,7 +148,7 @@ namespace SportsStore.UnitTests
         {
             // Arange
             var cart = new Cart();
-            var cartController = new CartController(null);
+            var cartController = new CartController(null, null);
 
             // Act
             var result = (CartIndexViewModel)cartController.Index(cart, "myUrl").ViewData.Model;
