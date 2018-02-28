@@ -50,7 +50,7 @@ namespace SportsStore.Domain.Concrete
                 }
 
                 StringBuilder body = new StringBuilder()
-                    .AppendLine("A new error has been submitted")
+                    .AppendLine("A new order has been submitted")
                     .AppendLine("---")
                     .AppendLine("Items:");
 
@@ -59,7 +59,7 @@ namespace SportsStore.Domain.Concrete
                     body.AppendFormat("{0} x {1} subtotal: {2:c}", line.Quantity, line.Product.Name, subtotal);
                 }
 
-                body.AppendFormat("Total order vale: {0:c}", cart.ComputeCartValue())
+                body.AppendFormat("Total order value: {0:c}", cart.ComputeCartValue())
                     .AppendLine("----")
                     .AppendLine("Ship to:")
                     .AppendLine(shippingInfo.NameOfCustomer)
