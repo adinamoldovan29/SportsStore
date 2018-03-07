@@ -159,6 +159,46 @@ namespace SportsStore.UnitTests
         }
         #endregion
 
+        [TestMethod]
+        public void Checkout_EmptyCart_CanNotCheckout()
+        {
+            // Arange
+            var orderProcessorMock = new Mock<IOrderProcessor>();
+            var cartController = new CartController(null, orderProcessorMock.Object);
+
+            var cart = new Cart();
+
+            //Act
+            var viewResult = cartController.Checkout(cart, null);
+
+            // Assert
+            orderProcessorMock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+                Times.Never);
+            Assert.IsFalse(viewResult.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Checkout_ModelInvalid_Validationerrors()
+        {
+            // Arange
+            var orderProcessorMock = new Mock<IOrderProcessor>();
+
+            var cartController = new CartController(null, orderProcessorMock.Object);
+            cartController.ModelState.AddModelError("error", "error");
+
+            var cart = new Cart();
+            cart.AddToCart(new Product(), 1);
+
+            //Act
+            var viewResult = cartController.Checkout(cart, null);
+
+            // Assert
+            orderProcessorMock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+                Times.Never);
+            Assert.IsFalse(viewResult.ViewData.ModelState.IsValid);
+
+        }
+
         private Mock<IProductsRepository> CreateRepositoryWithOneProduct()
         {
             var prodRepoMock = new Mock<IProductsRepository>();
