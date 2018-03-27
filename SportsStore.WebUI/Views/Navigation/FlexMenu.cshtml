@@ -1,0 +1,23 @@
+﻿@model IEnumerable<string>
+
+@{ 
+    var isHorizontal = (bool)(ViewContext.RouteData.Values["isHorizontal"] ?? false);
+    var divWrapper = isHorizontal ? "btn-group btn-group-sm btn-group-justified" : null;
+}
+
+<div class= "@divWrapper">
+    @Html.ActionLink("Home", "List", "Product", null, new
+{       @class = "btn btn-default " + (isHorizontal ? "btn-sm" : "btn-block btn-lg")})
+
+    @foreach (var el in Model)
+    {
+        @Html.RouteLink(el, new
+        {
+            controller = "Product",
+            action = "List",
+            category = el
+        },
+                    new { @class = "btn btn-default " + (isHorizontal? "btn-sm" : "btn-block btn-lg")
+                        + (el == ViewBag.CurrentCategory? "btn-primary":"")});
+    }
+</div>
