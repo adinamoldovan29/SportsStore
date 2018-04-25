@@ -1,4 +1,5 @@
 ﻿using SportsStore.Domain.Abstract;
+using SportsStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,22 @@ namespace SportsStore.WebUI.Controllers
                 .FirstOrDefault(p => p.ProductID == ProductID);
 
             return View(selectedProd);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                productRepository.SaveProduct(product);
+                TempData["message"] = $"The product {product.Name} has been saved";
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(product);
+            }
         }
     }
 }

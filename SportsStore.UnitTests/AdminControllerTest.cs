@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SportsStore.Domain.Entities;
 using SportsStore.UnitTests.Helpers;
 using SportsStore.WebUI.Controllers;
@@ -57,6 +58,31 @@ namespace SportsStore.UnitTests
             var resultProduct = adminController.Edit(10).ViewData.Model as Product;
 
             Assert.IsNull(resultProduct);
+        }
+
+        [TestMethod]
+        public void Edit_ValidProduct_ProductUpdated()
+        {
+            var productRepo = RepositoryHelper.CreateProductsRepoMock();
+            var adminController = new AdminController(productRepo.Object);
+
+            var product = new Product();
+            adminController.Edit(product);
+
+            productRepo.Verify(m => m.SaveProduct(product));
+        }
+
+        [TestMethod]
+        public void Edit_InvValidProduct_ProductNotUpdated()
+        {
+            var productRepo = RepositoryHelper.CreateProductsRepoMock();
+            var adminController = new AdminController(productRepo.Object);
+            adminController.ModelState.AddModelError("errorMessage", "This is an error");
+
+            var product = new Product();
+            adminController.Edit(product);
+
+            productRepo.Verify(m => m.SaveProduct(product), Times.Never());
         }
     }
 }
