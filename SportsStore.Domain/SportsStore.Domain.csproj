@@ -85,11 +85,28 @@
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails..cs" />
+    <Compile Include="Migrations\201711121523158_InitialCreate.cs" />
+    <Compile Include="Migrations\201711121523158_InitialCreate.Designer.cs">
+      <DependentUpon>201711121523158_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804251858071_AddValidationForProduct.cs" />
+    <Compile Include="Migrations\201804251858071_AddValidationForProduct.Designer.cs">
+      <DependentUpon>201804251858071_AddValidationForProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711121523158_InitialCreate.resx">
+      <DependentUpon>201711121523158_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804251858071_AddValidationForProduct.resx">
+      <DependentUpon>201804251858071_AddValidationForProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
