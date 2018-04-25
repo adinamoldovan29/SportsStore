@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     <div class="panel-body">
-        @Html.HiddenFor(m => m.ProductID);
+        @Html.HiddenFor(m => m.ProductID)
         @foreach (var prop in ViewData.ModelMetadata.Properties)
         {
             if (prop.PropertyName != nameof(Model.ProductID))
@@ -32,7 +32,7 @@
 
         <div class="panel-footer">
             <input type="submit" value="Save" class="btn btn-primary"/>
-            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default"});
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default"})
         </div>
     </div>
 }
