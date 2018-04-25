@@ -65,8 +65,8 @@ namespace SportsStore.UnitTests
         {
             var productRepo = RepositoryHelper.CreateProductsRepoMock();
             var adminController = new AdminController(productRepo.Object);
-
             var product = new Product();
+
             adminController.Edit(product);
 
             productRepo.Verify(m => m.SaveProduct(product));
@@ -78,8 +78,8 @@ namespace SportsStore.UnitTests
             var productRepo = RepositoryHelper.CreateProductsRepoMock();
             var adminController = new AdminController(productRepo.Object);
             adminController.ModelState.AddModelError("errorMessage", "This is an error");
-
             var product = new Product();
+
             adminController.Edit(product);
 
             productRepo.Verify(m => m.SaveProduct(product), Times.Never());

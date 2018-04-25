@@ -12,7 +12,13 @@
     <link href="~/Content/error-styles.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
+
 <body>
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">@TempData["message"]</div>
+    }
+    
     <div>
         @RenderBody()
     </div>
