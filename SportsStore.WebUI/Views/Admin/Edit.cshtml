@@ -8,7 +8,7 @@
 <h1>Edit @Model.Name</h1>
 
 @using (Html.BeginForm("Edit", "Admin"))
-{
+{       
     <div class="panel-body">
         @Html.HiddenFor(m => m.ProductID)
         @foreach (var prop in ViewData.ModelMetadata.Properties)

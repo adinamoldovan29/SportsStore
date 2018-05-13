@@ -84,5 +84,16 @@ namespace SportsStore.UnitTests
 
             productRepo.Verify(m => m.SaveProduct(product), Times.Never());
         }
+
+        [TestMethod]
+        public void Delete_ProductFromDb_ProductDeleted()
+        {
+            var productRepo = RepositoryHelper.CreateProductsRepoMock();
+            var adminController = new AdminController(productRepo.Object);
+
+            adminController.Delete(2);
+
+            productRepo.Verify(m => m.DeleteProduct(2), Times.Once);
+        }
     }
 }
