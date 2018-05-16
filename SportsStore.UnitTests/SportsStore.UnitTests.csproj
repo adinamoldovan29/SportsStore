@@ -100,6 +100,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AccountController.cs" />
     <Compile Include="AdminControllerTest.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="CartTest.cs" />
