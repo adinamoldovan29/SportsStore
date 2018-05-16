@@ -8,9 +8,11 @@ using System.Web.Mvc;
 
 namespace SportsStore.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductsRepository productRepository;
+
         public AdminController(IProductsRepository repo)
         {
             productRepository = repo;
