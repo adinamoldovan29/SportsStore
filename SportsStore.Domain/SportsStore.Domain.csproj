@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201804251858071_AddValidationForProduct.Designer.cs">
       <DependentUpon>201804251858071_AddValidationForProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805162101230_AddProductImage.cs" />
+    <Compile Include="Migrations\201805162101230_AddProductImage.Designer.cs">
+      <DependentUpon>201805162101230_AddProductImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804251858071_AddValidationForProduct.resx">
       <DependentUpon>201804251858071_AddValidationForProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805162101230_AddProductImage.resx">
+      <DependentUpon>201805162101230_AddProductImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
