@@ -46,6 +46,8 @@ namespace SportsStore.Domain.Concrete
                     prod.Description = product.Description;
                     prod.Price = product.Price;
                     prod.Category = product.Category;
+                    prod.ImageMymeType = product.ImageMymeType;
+                    prod.ImageData = product.ImageData;
                 }
             }
             dbContext.SaveChanges();

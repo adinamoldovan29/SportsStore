@@ -3,6 +3,7 @@ using SportsStore.WebUI.Controllers;
 using System.Linq;
 using SportsStore.WebUI.Models;
 using SportsStore.UnitTests.Helpers;
+using System.Web.Mvc;
 
 namespace SportsStore.UnitTests
 {
@@ -82,6 +83,36 @@ namespace SportsStore.UnitTests
             // Assert
             Assert.IsNotNull(model, "Model is null");
             Assert.AreEqual(productsRepoMoack.Products.Count(), model.PagingInfo.TotalItems, "Products were not retured corectly");
+        }
+
+        [TestMethod]
+        public void GetImage_ProductExists_ReturnsImage()
+        {
+            //Arange
+            var productsRepoMock = RepositoryHelper.CreateProductsWithImageRepoMock();
+            var productController = new ProductController(productsRepoMock.Object);
+
+            //Act
+            var result = productController.GetImage(2);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(FileContentResult));
+            Assert.AreEqual("image/png", result.ContentType);
+        }
+
+        [TestMethod]
+        public void GetImage_ProductDoesNotExist_ReturnsNull()
+        {
+            //Arange
+            var productsRepoMock = RepositoryHelper.CreateProductsWithImageRepoMock();
+            var productController = new ProductController(productsRepoMock.Object);
+
+            //Act
+            var result = productController.GetImage(100);
+
+            //Assert
+            Assert.IsNull(result);
         }
     }
 }

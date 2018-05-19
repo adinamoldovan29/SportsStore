@@ -33,5 +33,18 @@ namespace SportsStore.UnitTests.Helpers
 
             return mock;
         }
+
+        public static Mock<IProductsRepository> CreateProductsWithImageRepoMock()
+        {
+            var mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>(){
+                new Product { ProductID = 1,  Name = "P1", Category = "cat1"},
+                new Product { ProductID = 2, Name = "P2",
+                    ImageMymeType = "image/png", ImageData = new byte[] { } },
+                new Product { ProductID = 3, Name = "P3"},
+            });
+
+            return mock;
+        }
     }
 }
